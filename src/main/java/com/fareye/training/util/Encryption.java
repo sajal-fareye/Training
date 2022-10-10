@@ -1,4 +1,5 @@
 package com.fareye.training.util;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -16,12 +17,10 @@ public class Encryption {
     private static final int keylength = 256;
 
     /* Method to generate the salt value. */
-    public static String getSaltvalue(int length)
-    {
+    public static String getSaltvalue(int length) {
         StringBuilder finalval = new StringBuilder(length);
 
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             finalval.append(characters.charAt(random.nextInt(characters.length())));
         }
 
@@ -29,28 +28,21 @@ public class Encryption {
     }
 
     /* Method to generate the hash value */
-    public static byte[] hash(char[] password, byte[] salt)
-    {
+    public static byte[] hash(char[] password, byte[] salt) {
         PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, keylength);
         Arrays.fill(password, Character.MIN_VALUE);
-        try
-        {
+        try {
             SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             return skf.generateSecret(spec).getEncoded();
-        }
-        catch (NoSuchAlgorithmException | InvalidKeySpecException e)
-        {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new AssertionError("Error while hashing a password: " + e.getMessage(), e);
-        }
-        finally
-        {
+        } finally {
             spec.clearPassword();
         }
     }
 
     /* Method to encrypt the password using the original password and salt value. */
-    public static String generateSecurePassword(String password, String salt)
-    {
+    public static String generateSecurePassword(String password, String salt) {
         String finalval = null;
 
         byte[] securePassword = hash(password.toCharArray(), salt.getBytes());
@@ -62,8 +54,7 @@ public class Encryption {
 
     /* Method to verify if both password matches or not */
     public static boolean verifyUserPassword(String providedPassword,
-                                             String securedPassword, String salt)
-    {
+                                             String securedPassword, String salt) {
         boolean finalval = false;
 
         /* Generate New secure password with the same salt */
