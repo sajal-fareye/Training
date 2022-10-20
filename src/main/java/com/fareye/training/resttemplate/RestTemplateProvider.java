@@ -18,4 +18,8 @@ public class RestTemplateProvider {
          return avatalUrl;
      }
 
+
+     public int addNumber(int a, int b){
+         return a+b;
+     }
 }

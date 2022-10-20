@@ -21,19 +21,17 @@ public class TodoController {
     }
 
     @GetMapping("/todos/{id}")
-    public ResponseEntity<Todo>  gettodo(@PathVariable("id") int id) {
-        if(!todos.containsKey(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.of(Optional.of(todos.get(id)));
+    public Todo  gettodo(@PathVariable("id") int id) throws Exception {
+        if(!todos.containsKey(id)) throw new Exception("This id is not here");
+        return todos.get(id);
     }
 
     @PostMapping("/todos")
-    public HashMap<Integer,Todo> createTodo(@Valid @RequestBody Todo todo){
+    public Todo createTodo(@Valid @RequestBody Todo todo){
         todo.setTodoId(todoID);
         todos.put(todoID,todo);
         todoID++;
-        return todos;
+        return todos.get(todoID-1);
     }
 
     @PutMapping("/todos/{id}")

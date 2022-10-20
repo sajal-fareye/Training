@@ -1,6 +1,8 @@
 package com.fareye.training.controller;
 
+import com.fareye.training.model.Todo;
 import com.fareye.training.model.User;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,15 +15,20 @@ public class UserController {
     int UserID;
 
     @GetMapping("/users")
-    public HashMap<Integer, User> hello(){
+    public HashMap<Integer, User> getUsers(){
         return users;
     }
 
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable("id") int id){
+        return users.get(id);
+    }
+
     @PostMapping("/users")
-    public HashMap<Integer, User> createUser(@RequestBody User user){
+    public User createUser(@RequestBody @NotNull User user){
         user.setUserId(UserID);
         users.put(UserID++,user);
-        return users;
+        return users.get(UserID-1);
     }
 
     @PutMapping("/users/{id}")

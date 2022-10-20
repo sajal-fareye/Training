@@ -18,10 +18,10 @@ public class Todo {
     private LocalDate modifiedDate;
     private String body;
 
-    @TodoValidation()
-    private String title;
-    @NotNull(message = "Status should not be null")
-    private String status;
+//    @TodoValidation()
+//    private String title;
+//    @NotNull(message = "Status should not be null")
+//    private String status;
     private User user;
 
     Todo() {
