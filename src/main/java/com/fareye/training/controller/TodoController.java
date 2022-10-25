@@ -1,51 +1,47 @@
 package com.fareye.training.controller;
 
 import com.fareye.training.model.Todo;
+import com.fareye.training.service.TodoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Optional;
-
 @RestController
 public class TodoController {
 
-    HashMap<Integer,Todo> todos = new HashMap<Integer, Todo>();
-    int todoID;
+    @Autowired
+    private TodoService todoService;
 
     @GetMapping("/todos")
-    public HashMap<Integer,Todo> gettodos(){
-        return todos;
+    public ResponseEntity gettodos(){
+        return new ResponseEntity(todoService.gettodos(),HttpStatus.OK);
     }
 
     @GetMapping("/todos/{id}")
-    public Todo  gettodo(@PathVariable("id") int id) throws Exception {
-        if(!todos.containsKey(id)) throw new Exception("This id is not here");
-        return todos.get(id);
+    public ResponseEntity gettodo(@PathVariable("id") Integer id){
+        return new ResponseEntity<>(this.todoService.getTodo(id),HttpStatus.OK);
     }
 
     @PostMapping("/todos")
-    public Todo createTodo(@Valid @RequestBody Todo todo){
-        todo.setTodoId(todoID);
-        todos.put(todoID,todo);
-        todoID++;
-        return todos.get(todoID-1);
+    public ResponseEntity createTodo(@RequestBody Todo todo){
+        return new ResponseEntity(todoService.addTodo(todo),HttpStatus.OK);
     }
 
-    @PutMapping("/todos/{id}")
-    public Todo updateTodo(@RequestBody Todo todo,@PathVariable("id") int id) throws Exception{
-        if(!todos.containsKey(id)) throw new Exception("This id is not here");
-        todo.setTodoId(id);
-        todos.put(id,todo);
-       return todos.get(id);
+    @PutMapping("/todos")
+    public ResponseEntity updateTodo(@RequestBody Todo todo){
+        return new ResponseEntity(todoService.updateTodo(todo),HttpStatus.OK);
     }
 
     @DeleteMapping("/todos/{id}")
-    public HashMap<Integer,Todo> deleteTodo(@PathVariable("id") int id) throws Exception{
-        if(!todos.containsKey(id)) throw new Exception("This id is not here");
-        todos.remove(id);
-        return todos;
+    public ResponseEntity deleteTodo(@PathVariable("id") Integer id){
+        try {
+            todoService.deleteTodo(id);
+            return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

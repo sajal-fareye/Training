@@ -1,0 +1,163 @@
+SELECT * FROM "user"
+WHERE DATE_PART('day',dob) = DATE_PART('day',CURRENT_DATE)
+    AND DATE_PART('month',dob) = DATE_PART('month',CURRENT_DATE);
+    
+    -------------(BIRTHDAY)--------------------------------------------
+    
+ select DISTINCT username from "user" inner join
+"transaction" on "user".userid = "transaction".userid and status=false;
+
+---------------(TRANSACTION FAILED USER)---------------------------------------
+
+
+select DISTINCT username from "user" full outer join
+"order" on "order".userid = "user".userid WHERE  "order".userid IS NULL;
+
+--------------(User with no transaction)-------------------------------------
+
+select * from "transaction" where userid=1 and status=false;
+
+---------------(Transaction failed for a user)----------------------
+select * from product where productid=
+(select productid from "order" group by productid having count(productid)=
+(select max(mycount) from (select productid, count(productid)
+					as mycount from "order" group by productid) "product"));
+	
+***[superHit]	
+	
+	
+	
+select DISTINCT productname from product inner join
+"order" on product.productid != "order".productid;
+
+***[product with no order]						
+		
+		
+		
+					
+select * from product where productid=
+(select productid from "order" group by productid having count(productid)=
+(select min(mycount) from (select productid, count(productid)
+					as mycount from "order" group by productid) "product"));
+					
+***[product with min number of order]					
+	
+	
+	
+						  
+----------------(max and min order of product)-------------------------------------
+
+select username from "user" where userid =
+(select userid from "transaction" where status=true group by userid having sum(amount)=
+(select max(mycount) from (select userid, sum(amount)
+					as mycount from "transaction" where status=true group by userid) "transaction"));
+					
+***[User with maximum payment]
+
+
+
+
+
+select username from "user" where userid =
+(select userid from "transaction" where status=true group by userid having sum(amount)=
+(select min(mycount) from (select userid, sum(amount)
+					as mycount from "transaction" where status=true group by userid) "transaction"));
+					
+***[User with minimum payment]
+
+
+
+
+
+select username from "user" where false = all
+(select status from "transaction" where "user".userid="transaction".userid);
+
+***[User with no payment]
+
+
+
+
+---------------------------( max and min payment of user)-------------------------------------
+
+select * from public.user where userid =
+(select userid from "order" group by userid having count(userid)=
+(select max(mycount) from (select userid, count(userid)
+					as mycount from "order" group by userid) "user"));
+					
+--------------------(Highly repeated user)------------------------------------------------------
+
+select productname from "product" where productid =
+(select productid from "order" group by productid having avg(rating)=
+(select max(mycount) from (select productid, avg(rating)
+					as mycount from "order" group by productid) "product"));
+					
+***[Maximum Product Rating]
+
+
+
+
+select productname from "product" where productid =
+(select productid from "order" group by productid having avg(rating)=
+(select min(mycount) from (select productid, avg(rating)
+					as mycount from "order" group by productid) "product"));
+					
+
+***[Minimum Product Rating]
+
+
+
+
+--------------------------(max and min product rating)-----------------------------------------------------------------------------
+
+
+select categoryid,categoryname from category where categoryid=
+(select categoryid from 
+  product inner join "order" on product.productid = "order".productid
+ 	where orderdate>current_date - interval '3 month' group by categoryid having count(categoryid)=
+		(select max(mycount) from 	
+				(select categoryid,count(categoryid) as mycount from 
+  					product inner join "order" on product.productid = "order".productid
+ 						where orderdate>current_date - interval '3 month' group by categoryid) category) );
+ 						
+ 
+ ***[max number of product in last quarter]
+ 
+ 
+ 
+ 
+ 
+ select categoryid,categoryname from category where categoryid=
+(select categoryid from 
+  product inner join "order" on product.productid = "order".productid
+ 	where orderdate>current_date - interval '3 month' group by categoryid having count(categoryid)=
+		(select min(mycount) from 	
+				(select categoryid,count(categoryid) as mycount from 
+  					product inner join "order" on product.productid = "order".productid
+ 						where orderdate>current_date - interval '3 month' group by categoryid) category) );
+ 						
+  ***[max number of product in last quarter]
+
+
+
+
+
+------------------------------------------------(last quarter order with max and min category)---------------------------------
+
+
+	select * from coupon where expirydate<current_date
+	
+----------------------------------------------(expiry date coupon)---------------------------------------------
+
+	select * from "order" where quantity>4;
+	
+----------------------------(order which quantity is more than 4)----------------------------------------------------------
+
+	select sum(amount) from 
+coupon inner join "order" on coupon.couponid = "order".couponid and userid=2 and
+coupon.expirydate > "order".orderdate and "order".orderdate > current_date - interval '6 month'
+
+	
+----------------------------------(total discount last 6 month)------------------------------------------------------
+
+
+

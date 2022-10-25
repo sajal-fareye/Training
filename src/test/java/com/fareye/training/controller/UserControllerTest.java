@@ -70,18 +70,20 @@ class UserControllerTest {
 //        assertEquals(myUser.getLastName(),serverUser.getLastName());
 //    }
 
-    @Test
-    void putMappingUserControllerTest() throws Exception {
-        int idToBeDeleted = 0;
-        User myUser = new User("Sajal","Agrawal","sajal@mail");
-        try {
-            ResponseEntity res = cout.updateUser(idToBeDeleted,myUser);
-            assertEquals(res.getStatusCode(), HttpStatus.OK);
-        }
-        catch (Exception e){
-            assertEquals(e.getMessage(),"This key is not in the System");
-        }
-    }
+
+    //This is for JPA and JDBC
+//    @Test
+//    void putMappingUserControllerTest() throws Exception {
+//        int idToBeDeleted = 0;
+//        User myUser = new User("Sajal","Agrawal","sajal@mail");
+//        try {
+//            ResponseEntity res = cout.updateUser(idToBeDeleted,myUser);
+//            assertEquals(res.getStatusCode(), HttpStatus.OK);
+//        }
+//        catch (Exception e){
+//            assertEquals(e.getMessage(),"This key is not in the System");
+//        }
+//    }
 
 
     @Test
