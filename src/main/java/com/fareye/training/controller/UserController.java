@@ -11,22 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
     private UserService userService;
-
-//    HashMap<Integer,User>users = new HashMap<Integer,User>();
-
-//    int UserID;
-
-//    public HashMap<Integer, User> getUserData(){
-//        return users;
-//    }
-
-//    public List<User> getUserData(){
-//        return this.userService.getUsers();
-//    }
 
 
     @GetMapping("/users")
@@ -37,12 +26,16 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity getUser(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(this.userService.getUser(id),HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(this.userService.getUser(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity("Wrong ID",HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/users")
     public ResponseEntity createUser(@RequestBody User user){
-        return new ResponseEntity(this.userService.addUser(user),HttpStatus.OK);
+        return new ResponseEntity(this.userService.addUser(user),HttpStatus.CREATED);
     }
 
 //    @PutMapping("/users/{id}")
@@ -68,10 +61,10 @@ public class UserController {
     public ResponseEntity deleteUser(@PathVariable("id") Integer id){
         try {
             userService.deleteUser(id);
-            return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Success Deleted User", HttpStatus.NO_CONTENT);
         }
         catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Wrong ID",HttpStatus.BAD_REQUEST);
         }
 
     }

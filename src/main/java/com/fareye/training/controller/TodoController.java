@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class TodoController {
 
     @Autowired
@@ -20,12 +21,16 @@ public class TodoController {
 
     @GetMapping("/todos/{id}")
     public ResponseEntity gettodo(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(this.todoService.getTodo(id),HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(this.todoService.getTodo(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity("Wrong ID",HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/todos")
     public ResponseEntity createTodo(@RequestBody Todo todo){
-        return new ResponseEntity(todoService.addTodo(todo),HttpStatus.OK);
+        return new ResponseEntity(todoService.addTodo(todo),HttpStatus.CREATED);
     }
 
     @PutMapping("/todos")
@@ -37,10 +42,10 @@ public class TodoController {
     public ResponseEntity deleteTodo(@PathVariable("id") Integer id){
         try {
             todoService.deleteTodo(id);
-            return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("success deleted",HttpStatus.NO_CONTENT);
         }
         catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Wrong ID",HttpStatus.BAD_REQUEST);
         }
 
     }

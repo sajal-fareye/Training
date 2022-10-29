@@ -18,8 +18,8 @@ import java.time.LocalDate;
 public class Todo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer todoId;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer todoid;
 //    private LocalDate douDate;
 //    private LocalDate createdDate;
 //    private LocalDate modifiedDate;
