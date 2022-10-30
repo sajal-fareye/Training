@@ -26,11 +26,8 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity getUser(@PathVariable("id") Integer id){
-        try {
+
             return new ResponseEntity<>(this.userService.getUser(id), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity("Wrong ID",HttpStatus.BAD_REQUEST);
-        }
     }
 
     @PostMapping("/users")
@@ -48,24 +45,15 @@ public class UserController {
 
     @PutMapping("/users")
     public ResponseEntity updateUser(@RequestBody User user){
-        try {
+
             return new ResponseEntity(this.userService.updateUser(user),HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
 
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity deleteUser(@PathVariable("id") Integer id){
-        try {
+
             userService.deleteUser(id);
             return new ResponseEntity<>("Success Deleted User", HttpStatus.NO_CONTENT);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>("Wrong ID",HttpStatus.BAD_REQUEST);
-        }
-
     }
 }

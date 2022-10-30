@@ -24,7 +24,7 @@ class TodoControllerTest {
     }
     @Test
     void getSingleTodo(){
-        int id = 3;
+        int id = 5;
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Todo> request = new HttpEntity<Todo>(headers);
@@ -32,7 +32,7 @@ class TodoControllerTest {
             ResponseEntity<Todo> res = restTemplate.exchange("http://localhost:8082/todos/" + id, HttpMethod.GET, request, Todo.class);
             assertEquals(res.getStatusCode(), HttpStatus.OK);
         }catch (Exception e){
-            assertEquals("400 : \"Wrong ID\"",e.getMessage());
+            assertEquals("404 : \"Wrong ID\"",e.getMessage());
         }
     }
 
@@ -52,19 +52,24 @@ class TodoControllerTest {
     @Test
     void putMappingTodo(){
         Todo todo= new Todo();
-        todo.setTodoid(3);
+        todo.setTodoid(8);
         todo.setTitle("TestController  Put");
         todo.setBody("This Put is from test Controller");
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Todo> request = new HttpEntity<Todo>(todo,headers);
-        ResponseEntity<Todo> res = restTemplate.exchange("http://localhost:8082/todos",HttpMethod.PUT,request, Todo.class);
-        assertEquals(res.getStatusCode(), HttpStatus.OK);
+        try {
+            ResponseEntity<Todo> res = restTemplate.exchange("http://localhost:8082/todos", HttpMethod.PUT, request, Todo.class);
+            assertEquals(res.getStatusCode(), HttpStatus.OK);
+        }
+        catch (Exception e){
+            assertEquals("404 : \"Wrong ID\"",e.getMessage());
+        }
     }
 
     @Test
     void deleteTodoMap(){
-        int id=3;
+        int id=2;
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> request = new HttpEntity<String>(headers);
@@ -73,7 +78,7 @@ class TodoControllerTest {
             assertEquals(res.getStatusCode(),HttpStatus.NO_CONTENT);
         }
         catch (Exception e){
-            assertEquals("400 : \"Wrong ID\"",e.getMessage());
+            assertEquals("404 : \"Wrong ID\"",e.getMessage());
         }
 
 

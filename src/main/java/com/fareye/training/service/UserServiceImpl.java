@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -30,13 +31,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User updateUser(User user) {
+        userDao.findById(user.getUserid()).orElseThrow(()-> new NoSuchElementException("This ID = "+user.getUserid()+" is not here"));
         userDao.save(user);
         return  user;
     }
 
     @Override
     public void deleteUser(Integer id) {
-        User temp = userDao.findById(id).get();
-        userDao.delete(temp);
+        userDao.findById(id).get();
+        userDao.deleteById(id);
     }
 }

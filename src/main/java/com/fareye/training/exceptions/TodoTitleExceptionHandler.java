@@ -1,4 +1,4 @@
-package com.fareye.training.advice;
+package com.fareye.training.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class TodoExceptionHandler {
+public class TodoTitleExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     public ResponseEntity<List> processUnmergeException(final MethodArgumentNotValidException ex) {

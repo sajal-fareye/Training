@@ -18,7 +18,7 @@ class UserControllerTest {
     }
     @Test
     void getSingleUser(){
-        int id = 6;
+        int id = 1;
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<User> request = new HttpEntity<User>(headers);
@@ -26,7 +26,7 @@ class UserControllerTest {
             ResponseEntity<User> res = restTemplate.exchange("http://localhost:8082/todos/" + id, HttpMethod.GET, request, User.class);
             assertEquals(res.getStatusCode(), HttpStatus.OK);
         }catch (Exception e){
-            assertEquals("400 : \"Wrong ID\"",e.getMessage());
+            assertEquals("404 : \"Wrong ID\"",e.getMessage());
         }
     }
 
@@ -46,20 +46,25 @@ class UserControllerTest {
     @Test
     void putMappingTodo(){
         User user= new User();
-        user.setUserid(16);
+        user.setUserid(1);
         user.setFirstname("TestController");
         user.setLastname("Put");
         user.setEmail("This is Put controller method");
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<User> request = new HttpEntity<User>(user,headers);
-        ResponseEntity<User> res = restTemplate.exchange("http://localhost:8082/users",HttpMethod.PUT,request, User.class);
-        assertEquals(res.getStatusCode(), HttpStatus.OK);
+        try {
+            ResponseEntity<User> res = restTemplate.exchange("http://localhost:8082/users", HttpMethod.PUT, request, User.class);
+            assertEquals(res.getStatusCode(), HttpStatus.OK);
+        }
+        catch (Exception e){
+            assertEquals("404 : \"Wrong ID\"",e.getMessage());
+        }
     }
 
     @Test
     void deleteTodoMap(){
-        int id=8;
+        int id=1;
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> request = new HttpEntity<String>(headers);
@@ -68,7 +73,7 @@ class UserControllerTest {
             assertEquals(res.getStatusCode(),HttpStatus.NO_CONTENT);
         }
         catch (Exception e){
-            assertEquals("400 : \"Wrong ID\"",e.getMessage());
+            assertEquals("404 : \"Wrong ID\"",e.getMessage());
         }
 
 

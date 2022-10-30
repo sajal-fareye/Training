@@ -21,11 +21,7 @@ public class TodoController {
 
     @GetMapping("/todos/{id}")
     public ResponseEntity gettodo(@PathVariable("id") Integer id){
-        try {
-            return new ResponseEntity<>(this.todoService.getTodo(id), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity("Wrong ID",HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(this.todoService.getTodo(id), HttpStatus.OK);
     }
 
     @PostMapping("/todos")
@@ -40,13 +36,7 @@ public class TodoController {
 
     @DeleteMapping("/todos/{id}")
     public ResponseEntity deleteTodo(@PathVariable("id") Integer id){
-        try {
             todoService.deleteTodo(id);
             return new ResponseEntity<>("success deleted",HttpStatus.NO_CONTENT);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>("Wrong ID",HttpStatus.BAD_REQUEST);
-        }
-
     }
 }
