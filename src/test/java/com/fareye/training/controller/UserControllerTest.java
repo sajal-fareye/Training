@@ -76,7 +76,6 @@ class UserControllerTest {
             assertEquals("404 : \"Wrong ID\"",e.getMessage());
         }
 
-
     }
 
 }

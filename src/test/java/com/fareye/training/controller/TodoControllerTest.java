@@ -39,9 +39,9 @@ class TodoControllerTest {
     @Test
     void postMappingTodo(){
         Todo todo= new Todo();
-        todo.setTodoid(3);
-        todo.setTitle("TestController  Post");
-        todo.setBody("This Post is from test Controller");
+       // todo.setTodoid(5);
+        todo.setTitle("TestController  Post 10");
+        todo.setBody("This Post is from test Controller 10");
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Todo> request = new HttpEntity<Todo>(todo,headers);
