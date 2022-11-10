@@ -17,7 +17,7 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Table(name="users")
-public class User implements UserDetails {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String lastname;
     private String email;
 
-    private String passowrd;
+    private String password;
 //    private String role;
 //    private String githubUserName;
 //    private boolean verified;
@@ -40,49 +40,43 @@ public class User implements UserDetails {
 //        this.gitAvatar = RestTemplateProvider.getavtar(githubUserName);
 //    }
 
-//    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-//    @JoinTable(name="user_role", joinColumns = @JoinColumn(name = "user",referencedColumnName = "userid"), inverseJoinColumns = @JoinColumn(name = "role",referencedColumnName = "roleid"))
-//    private Set<Role> roles = new HashSet<>();
-
     private String role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        this.roles.add("ROLE_ADMIN");
-//        this.roles.add("RODE_USER");
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.role);
-        authorities.add(authority);
-        return  authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.passowrd;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.firstname;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.role);
+//        authorities.add(authority);
+//        return  authorities;
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return this.passowrd;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return this.firstname;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }

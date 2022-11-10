@@ -1,17 +1,7 @@
 package com.fareye.training.controller;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +11,6 @@ public class WelcomeController {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
-
-//    @Autowired
-//    private ProviderManager providerManager = new ProviderManager();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
